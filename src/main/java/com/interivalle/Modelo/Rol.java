@@ -17,8 +17,7 @@ public class Rol {
 
     // Identificador único autoincremental
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    
+    @GeneratedValue(strategy = GenerationType.IDENTITY)    
     Integer idRol;
 
     // Nombre del rol (ej: ADMIN, CLIENTE, SUPERVISOR)

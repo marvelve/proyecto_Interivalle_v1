@@ -21,7 +21,6 @@ import java.time.LocalDateTime;
  * Se utiliza con JPA para mapear los campos y sus relaciones.
  */
 @Entity
-@Table(name = "usuario")
 public class Usuario {
 
     // Llave primaria (auto incremental)
@@ -43,8 +42,8 @@ public class Usuario {
     String nombreProyectoUsuario;
 	
     @ManyToOne
-    Integer idRol;
-    // Relación con la tabla Rol
+    @JoinColumn(name = "id_rol", referencedColumnName = "idRol")
+    private Rol rol;  // relación directa con la entidad Rol
     
 
     // ------------------ CONSTRUCTORES ------------------
@@ -57,8 +56,8 @@ public class Usuario {
         this.contrasenaUsuario = contrasenaUsuario;
         this.celularUsuario = celularUsuario;
         this.nombreProyectoUsuario = nombreProyectoUsuario;
-        this.idRol = idRol;
         this.fechaRegistroUsuario = LocalDateTime.now();
+        
     }
 
     // ------------------ GETTERS Y SETTERS ------------------
@@ -83,7 +82,11 @@ public class Usuario {
     }
 
     public void setCorreoUsuario(String correoUsuario) {
+        if (correoUsuario.contains("@")) {
         this.correoUsuario = correoUsuario;
+    } else {
+        System.out.println("Correo inválido");
+    }
     }
 
     public String getContrasenaUsuario() {
@@ -117,14 +120,15 @@ public class Usuario {
     public void setNombreProyectoUsuario(String nombreProyectoUsuario) {
         this.nombreProyectoUsuario = nombreProyectoUsuario;
     }
-
-    public Integer getRol() {
-        return idRol;
+    
+    public Rol getRol() {
+        return rol;
     }
 
-    public void setRol(Integer idRol) {
-        this.idRol = idRol;
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
+
 }
 
 
