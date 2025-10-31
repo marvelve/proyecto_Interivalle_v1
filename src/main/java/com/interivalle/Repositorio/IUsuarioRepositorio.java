@@ -4,7 +4,6 @@
  */
 
 package com.interivalle.Repositorio;
-
 /**
  *
  * @author mary_

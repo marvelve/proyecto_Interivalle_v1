@@ -4,9 +4,7 @@
  */
 
 package com.interivalle.Controlador;
-
 /**
- *
  * @author mary_
  * Capa de presentación (controlador REST)
  * Controlador REST que gestiona las solicitudes HTTP relacionadas con usuarios.
@@ -22,7 +20,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/usuarios") // URL base para acceder al controlador
-@CrossOrigin(origins = "http://localhost:3000") // Permite conexión con React o Postman
+
 public class UsuarioControler {
 
     @Autowired
@@ -31,27 +29,27 @@ public class UsuarioControler {
     // ------------------ ENDPOINTS ------------------
 
     // Registrar usuario (POST)
-    @PostMapping("/registrar")
+    @PostMapping
     public Usuario registrarUsuario(@RequestBody Usuario usuario) {
         return usuarioServicio.registrarUsuario(usuario);
     }
 
     // Listar todos los usuarios (GET)
-    @GetMapping("/listar")
+    @GetMapping
     public List<Usuario> listarUsuarios() {
         return usuarioServicio.listarUsuarios();
     }
 
     // Buscar usuario por correo (GET)
-    @GetMapping("/buscar/{correo}")
-    public Optional<Usuario> buscarUsuarioPorCorreo(@PathVariable String correo) {
-        return usuarioServicio.buscarPorCorreo(correo);
+    @GetMapping("/buscar/{correo_usuario}")
+    public Optional<Usuario> buscarUsuarioPorCorreo(@PathVariable String correoUsuario) {
+        return usuarioServicio.buscarPorCorreo(correoUsuario);
     }
 
     // Eliminar usuario por ID (DELETE)
-    @DeleteMapping("/eliminar/{id}")
-    public String eliminarUsuario(@PathVariable String correo) {
-        usuarioServicio.eliminarUsuario(correo);
+    @DeleteMapping("/eliminar/{id_usuario}")
+    public String eliminarUsuario(@PathVariable String correoUsuario) {
+        usuarioServicio.eliminarUsuario(correoUsuario);
         return "Usuario eliminado correctamente";
     }
 }
