@@ -69,6 +69,7 @@ public class Usuario {
         this.contrasenaUsuario = contrasenaUsuario;
         this.celularUsuario = celularUsuario;
         this.nombreProyectoUsuario = nombreProyectoUsuario;
+        this.idRol=idRol;
     }
 
     //Getters y setters   
