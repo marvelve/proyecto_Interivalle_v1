@@ -12,6 +12,7 @@ package com.interivalle.Servicio;
 
 import com.interivalle.Modelo.Usuario;
 import com.interivalle.Repositorio.IUsuarioRepositorio;
+import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -30,22 +31,26 @@ public class UsuarioServicio {
     // ------------------ METODOS ------------------
 
     // Registrar un nuevo usuario
-    public Usuario registrarUsuario(Usuario usuario) {
-        if (usuarioRepositorio.existsByCorreoUsuario(usuario.getCorreoUsuario())) {
-            throw new RuntimeException("El correo ya esta registrado");
+    public Usuario guardarUsuario(Usuario usuario) {
+       // Verificar si el correo ya existe
+        Optional<Usuario> existente = usuarioRepositorio.findByCorreoUsuario(usuario.getCorreoUsuario());
+        if (existente.isPresent()) {
+            throw new IllegalArgumentException("El correo ya esta registrado");
         }
         return usuarioRepositorio.save(usuario);
     }
+    
+    // Buscar usuario por correo
+    public Optional<Usuario> buscarPorCorreo(String correoUsuario) {
+        return usuarioRepositorio.findByCorreoUsuario(correoUsuario);
+    }
+     
 
     // Listar todos los usuarios
     public List<Usuario> listarUsuarios() {
         return usuarioRepositorio.findAll();
     }
 
-    // Buscar usuario por correo
-    public Optional<Usuario> buscarPorCorreo(String correoUsuario) {
-        return usuarioRepositorio.findByCorreoUsuario(correoUsuario);
-    }
 
     // Eliminar usuario por ID
     public void eliminarUsuario(String correoUsuario) {
