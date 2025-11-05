@@ -43,6 +43,27 @@ public class UsuarioControler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error interno del servidor");
     }
 }
+   
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUsuario(@RequestBody Usuario usuario) {
+    try {
+        Usuario usuarioEncontrado = usuarioServicio.validarLogin(
+                usuario.getCorreoUsuario(), usuario.getContrasenaUsuario()
+        );
+
+        if (usuarioEncontrado != null) {
+            return ResponseEntity.ok(usuarioEncontrado); // Devuelve el usuario si todo está bien
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Correo o contraseña incorrectos");
+        }
+
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Error al procesar el inicio de sesión");
+    }
+}
+
     
         // Buscar usuario por correo (GET)
     @GetMapping("/buscar/{correo_usuario}")
