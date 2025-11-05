@@ -1,9 +1,9 @@
 com\interivalle\Repositorio\IRolRepositorio.class
 com\interivalle\Controlador\RolControler.class
-com\interivalle\GestionProcesosInterivalle.class
-com\interivalle\Controlador\UsuarioControler.class
 com\interivalle\Repositorio\IUsuarioRepositorio.class
 com\interivalle\Servicio\RolServicio.class
+com\interivalle\GestionProcesosInterivalle.class
+com\interivalle\Controlador\UsuarioControler.class
 com\interivalle\Servicio\UsuarioServicio.class
 com\interivalle\Modelo\Rol.class
 com\interivalle\Modelo\Usuario.class
