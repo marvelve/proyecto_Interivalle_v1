@@ -44,6 +44,16 @@ public class UsuarioServicio {
     public Optional<Usuario> buscarPorCorreo(String correoUsuario) {
         return usuarioRepositorio.findByCorreoUsuario(correoUsuario);
     }
+    
+    public Usuario validarLogin(String correo, String contrasena) {
+    Optional<Usuario> usuario = usuarioRepositorio.findByCorreoUsuario(correo);
+
+    if (usuario.isPresent() && usuario.get().getContrasenaUsuario().equals(contrasena)) {
+        return usuario.get();
+    }
+    return null; // Si no existe o la contraseña no coincide
+}
+
      
 
     // Listar todos los usuarios
