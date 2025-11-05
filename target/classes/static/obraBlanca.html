@@ -1,1 +1,55 @@
-prueba
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cotización Obra Blanca</title>
+</head>
+<body>
+
+  <h2>Servicio de Obra Blanca</h2>
+
+  <p>Seleccione una opción:</p>
+  <label>
+    <input type="radio" name="opcion" value="base"> Cotización Base
+  </label>
+  <label>
+    <input type="radio" name="opcion" value="visita"> Visita Técnica
+  </label>
+
+  <hr>
+
+  <!-- Sección Cotización Base -->
+  <div id="cotizacionBase" style="display: none;">
+    <h3>Checklist de Cotización Base</h3>
+    <form id="formChecklist">
+      <label><input type="checkbox" name="item" value="manoObra_materiales"> Mano Obra Blanca y Materiales</label><br>
+      <label><input type="checkbox" name="item" value="carpinteria"> Carpinteria</label><br>
+      <label><input type="checkbox" name="item" value="divisiones_vidrio"> Divisiones en vidrio</label><br>
+      <label><input type="checkbox" name="item" value="mezon_granito"> Mezon Granito</label><br>
+      <button type="submit">Enviar Cotización Base</button>
+    </form>
+  </div>
+
+  <!-- Sección Visita Técnica -->
+  <div id="visitaTecnica" style="display: none;">
+    <h3>Agendar Visita Técnica</h3>
+    <form id="formVisita">
+      <label>Fecha:</label>
+      <input type="date" id="fecha_visita" required><br><br>
+
+      <label>Hora:</label>
+      <input type="time" id="hora_visita" required><br><br>
+
+      <label>Lugar / Dirección:</label>
+      <input type="text" id="lugar_visita" required><br><br>
+
+      <button type="submit">Agendar Visita</button>
+    </form>
+  </div>
+
+  <p id="mensaje"></p>
+
+  <script src="js/obraBlanca.js"></script>
+</body>
+</html>
