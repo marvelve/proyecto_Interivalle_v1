@@ -67,7 +67,7 @@ public class UsuarioControler {
     
         // Buscar usuario por correo (GET)
     @GetMapping("/buscar/{correo_usuario}")
-    public Optional<Usuario> buscarUsuarioPorCorreo(@PathVariable String correoUsuario) {
+    public Optional<Usuario> buscarUsuarioPorCorreo(@PathVariable("correo_usuario") String correoUsuario) {
         return usuarioServicio.buscarPorCorreo(correoUsuario);
     }
 

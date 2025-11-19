@@ -34,6 +34,10 @@ document.getElementById("formChecklist").addEventListener("submit", event => {
   console.log("Cotización base enviada:", items);
   mensaje.textContent = "Cotización base enviada correctamente.";
   mensaje.style.color = "green";
+  
+   setTimeout(() => {
+            window.location.href = "Registro.html";
+        }, 2000);
 });
 
 // Enviar solicitud de Visita Técnica
