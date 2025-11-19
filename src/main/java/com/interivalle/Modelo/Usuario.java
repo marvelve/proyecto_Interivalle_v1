@@ -14,6 +14,7 @@ package com.interivalle.Modelo;
  */
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import java.time.LocalDateTime;
 
 /**
@@ -31,12 +32,19 @@ public class Usuario {
     @Column(name = "id_usuario")
     Integer idUsuario;
 
+    @NotBlank(message = "El nombre es obligatorio")
+    @Size(min = 4, message = "El nombre debe tener mínimo 3 caracteres")
     @Column(name = "nombre_usuario")
     String nombreUsuario;
 
+    
+    @NotBlank(message = "El correo es obligatorio")
+    @Email(message = "El correo no es válido")
     @Column(name = "correo_usuario")
     String correoUsuario;
 
+    
+    
     @Column(name = "contrasena_usuario")
     String contrasenaUsuario;
 

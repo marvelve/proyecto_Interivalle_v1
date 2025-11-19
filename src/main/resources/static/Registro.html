@@ -11,13 +11,23 @@
     <h2>Registro de Usuario</h2>
     
     <label>Nombre completo:</label>
-    <input type="text" id="nombre_usuario" required><br>
+    <input type="text" id="nombre_usuario" 
+        minlength="5"
+        pattern="^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$"
+        title="El nombre solo puede contener letras y espacios, mínimo 5 caracteres"
+        required><br>
 
     <label>Correo:</label>
-    <input type="email" id="correo_usuario" required><br>
+    <input type="email" id="correo_usuario" 
+           title="Ingresa un correo válido, por ejemplo: usuario@correo.com"
+           required><br>
 
     <label>Contraseña:</label>
-    <input type="password" id="contrasena_usuario" required><br>
+    <input type="password" id="contrasena_usuario" 
+           minlength="8"
+            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$"
+            title="La contraseña debe tener mínimo 8 caracteres, incluyendo mayúscula, minúscula, número y símbolo"
+           required><br>
 
     <label>Nombre del Proyecto:</label>
     <input type="text" id="nombre_proyecto_usuario" required><br>
