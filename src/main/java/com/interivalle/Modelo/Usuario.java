@@ -20,10 +20,9 @@ import java.time.LocalDateTime;
 /**
  * Clase entidad que representa la tabla 'usuario' en la base de datos.
  * Se utiliza con JPA para mapear los campos y sus relaciones.
- */
-    
-    @Entity
-@Table(name = "usuario")
+ */ 
+@Entity
+@Table(name="usuario")
 public class Usuario {
 
         // Llave primaria (auto incremental)

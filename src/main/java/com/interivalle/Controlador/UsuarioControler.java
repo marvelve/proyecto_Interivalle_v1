@@ -14,8 +14,7 @@ import com.interivalle.Modelo.Usuario;
 import com.interivalle.Servicio.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -44,23 +43,18 @@ public class UsuarioControler {
     }
 }
    
-    @PostMapping("/login")
-    public ResponseEntity<?> loginUsuario(@RequestBody Usuario usuario) {
-    try {
-        Usuario usuarioEncontrado = usuarioServicio.validarLogin(
-                usuario.getCorreoUsuario(), usuario.getContrasenaUsuario()
-        );
+@PostMapping("/login")
+public ResponseEntity<?> loginUsuario(@RequestBody Usuario usuario) {
 
-        if (usuarioEncontrado != null) {
-            return ResponseEntity.ok(usuarioEncontrado); // Devuelve el usuario si todo está bien
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body("Correo o contraseña incorrectos");
-        }
+    Usuario usuarioEncontrado = usuarioServicio.validarLogin(
+            usuario.getCorreoUsuario(), usuario.getContrasenaUsuario()
+    );
 
-    } catch (Exception e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Error al procesar el inicio de sesión");
+    if (usuarioEncontrado != null) {
+        return ResponseEntity.ok(usuarioEncontrado);
+    } else {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(Map.of("mensaje", "Correo o contraseña incorrectos"));
     }
 }
 
@@ -78,7 +72,7 @@ public class UsuarioControler {
     }
 
     // Eliminar usuario por ID (DELETE)
-    @DeleteMapping("/eliminar/{id_usuario}")
+    @DeleteMapping("/eliminar/{correo_usuario}")
     public String eliminarUsuario(@PathVariable String correoUsuario) {
         usuarioServicio.eliminarUsuario(correoUsuario);
         return "Usuario eliminado correctamente";

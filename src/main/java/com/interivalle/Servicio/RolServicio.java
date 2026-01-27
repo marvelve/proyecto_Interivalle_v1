@@ -23,7 +23,8 @@ public class RolServicio {
 
     @Autowired
     private IRolRepositorio rolRepositorio;
-
+    
+    // ------------------ METODOS ------------------
     /**
      * Guarda o actualiza un rol en la base de datos.
      */
