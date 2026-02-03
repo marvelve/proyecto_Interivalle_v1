@@ -38,3 +38,9 @@ document.getElementById("formRegistro").addEventListener("submit", function(even
     })
     .catch(error => console.error(error));
 });
+
+// CERRAR SESIÓN
+function cerrarSesion(){
+   localStorage.removeItem("usuarioCorreo");
+   window.location.replace("/login.html");
+}

@@ -10,8 +10,6 @@ package com.interivalle.Modelo;
  */
 
 import jakarta.persistence.*;
-import lombok.Data;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -20,26 +18,52 @@ public class ServiciosDetalle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id_detalle")
     private Long idDetalle;
 
-    @Column(name="nombre_servicio")
-    private String nombreServicio;
-
-    // Relación con solicitud padre
     @ManyToOne
-    @JoinColumn(name="id_solicitud")
-    @JsonIgnore //evita ciclo infinito
-    private ServiciosACotizar servicio;
+    @JoinColumn(name = "id_servicios_a_cotizar", nullable = false)
+    private ServiciosACotizar serviciosACotizar;
+
+    @ManyToOne
+    @JoinColumn(name = "id_servicio", nullable = false)
+    private Servicios servicio;
+
+    private String estado; // GENERADO | PENDIENTE
+
 
     // ===== Getters y Setters =====
-    public ServiciosACotizar getServicio() { return servicio; }
-    public void setServicio(ServiciosACotizar servicio) { this.servicio = servicio; }
+    
+      public Long getIdDetalle() {
+        return idDetalle;
+    }
 
-    public String getNombreServicio() { return nombreServicio; }
-    public void setNombreServicio(String nombreServicio) { this.nombreServicio = nombreServicio; }
+    public void setIdDetalle(Long idDetalle) {
+        this.idDetalle = idDetalle;
+    }
+
+    public ServiciosACotizar getServiciosACotizar() {
+        return serviciosACotizar;
+    }
+
+    public void setServiciosACotizar(ServiciosACotizar serviciosACotizar) {
+        this.serviciosACotizar = serviciosACotizar;
+    }
+
+    public Servicios getServicio() {
+        return servicio;
+    }
+
+    public void setServicio(Servicios servicio) {
+        this.servicio = servicio;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+     
 }
-
-
-
 

@@ -40,18 +40,13 @@ public class Usuario {
     @NotBlank(message = "El correo es obligatorio")
     @Email(message = "El correo no es válido")
     @Column(name = "correo_usuario")
-    String correoUsuario;
-
-    
+    String correoUsuario;  
     
     @Column(name = "contrasena_usuario")
     String contrasenaUsuario;
 
     @Column(name = "celular_usuario")
     String celularUsuario;
-
-    @Column(name = "nombre_proyecto_usuario")
-    String nombreProyectoUsuario;
 
     @Column(name = "fecha_registro_usuario")
     LocalDateTime fechaRegistroUsuario;
@@ -75,7 +70,6 @@ public class Usuario {
         this.correoUsuario = correoUsuario;
         this.contrasenaUsuario = contrasenaUsuario;
         this.celularUsuario = celularUsuario;
-        this.nombreProyectoUsuario = nombreProyectoUsuario;
         this.idRol=idRol;
     }
 
@@ -103,10 +97,6 @@ public class Usuario {
     public String getCelularUsuario() { return celularUsuario; }
     public void setCelularUsuario(String celularUsuario) { 
         this.celularUsuario = celularUsuario; }
-
-    public String getNombreProyectoUsuario() { return nombreProyectoUsuario; }
-    public void setNombreProyectoUsuario(String nombreProyectoUsuario) { 
-        this.nombreProyectoUsuario = nombreProyectoUsuario; }
 
     public LocalDateTime getFechaRegistroUsuario() { return fechaRegistroUsuario; }
     public void setFechaRegistroUsuario(LocalDateTime fechaRegistroUsuario) { 

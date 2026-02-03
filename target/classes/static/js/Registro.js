@@ -5,7 +5,6 @@ document.getElementById("formRegistro").addEventListener("submit", function(even
         nombreUsuario: document.getElementById("nombre_usuario").value,
         correoUsuario: document.getElementById("correo_usuario").value,
         contrasenaUsuario: document.getElementById("contrasena_usuario").value,
-        nombreProyectoUsuario: document.getElementById("nombre_proyecto_usuario").value,
         celularUsuario: document.getElementById("celular_usuario").value
        // , rol: { idRol: 1 } // Rol "Cliente"
     };

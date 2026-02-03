@@ -1,55 +1,50 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Servicios a Cotizar en Remodelacion</title>
+    <meta charset="UTF-8">
+    <title>Servicios a Cotizar</title>
 </head>
 <body>
 
-  <h2>Servicio de Obra Blanca</h2>
-      <button onclick="cerrarSesion()">Cerrar sesión</button>
+<h2>Servicios a Cotizar</h2>
+<button onclick="cerrarSesion()">Cerrar sesión</button>
   <p>Seleccione una opción:</p>
-  <label>
-    <input type="radio" name="opcion" value="base"> Cotización Base
-  </label>
-  <label>
-    <input type="radio" name="opcion" value="visita"> Visita Técnica Cotizacion mas detallada
-  </label>
+<label>
+  <input type="radio" name="tipo" id="opcionCotizacion" value="COTIZACION">Cotización Base
+</label>
 
-  <hr>
+<label>
+  <input type="radio" name="tipo" id="opcionVisita" value="VISITA"> Visita Técnica
+</label>
 
-  <!-- Sección Cotización Base -->
-  <div id="cotizacionBase" style="display: none;">
-    <h3>Checklist de Cotización Base</h3>
-    <form id="formChecklist">
-      <label><input type="checkbox" name="item" value="1"> Mano Obra Blanca y Materiales</label><br>
-      <label><input type="checkbox" name="item" value="2"> Carpinteria</label><br>
-      <label><input type="checkbox" name="item" value="3"> Divisiones en vidrio</label><br>
-      <label><input type="checkbox" name="item" value="4"> Mezon Granito</label><br>
-      <button type="submit">Generar Cotización Base</button>
-    </form>
-  </div>
+<hr>
+
+<!-- BLOQUE COTIZACIÓN -->
+<div id="bloqueCotizacion" style="display:none;">
+  <h3>Seleccione los servicios</h3>
+
+  <label><input type="checkbox" class="servicioCheck" value="1"> Mano de Obra y Materiales</label><br>
+  <label><input type="checkbox" class="servicioCheck" value="2"> Carpintería</label><br>
+  <label><input type="checkbox" class="servicioCheck" value="3"> Divisiones en Vidrio</label><br>
+  <label><input type="checkbox" class="servicioCheck" value="4"> Mesón Granito</label><br>
+  <label><input type="text" id="nombre_proyecto_usuario" required>Nombre del Proyecto:</label><br><br>
   
-  <!-- Sección Visita Técnica -->
-  <div id="visitaTecnica" style="display: none;">
-    <h3>Agendar Visita Técnica</h3>
-    <form id="formVisita">
-      <label>Fecha:</label>
-      <input type="date" id="fecha_visita" required><br><br>
+  <button id="btnCotizar">Ir a Cotización Base</button>
+</div>
 
-      <label>Hora:</label>
-      <input type="time" id="hora_visita" required><br><br>
+<!-- BLOQUE VISITA -->
+<div id="bloqueVisita" style="display:none;">
+  <h3>Datos de la visita técnica</h3>
 
-      <label>Lugar / Dirección:</label>
-      <input type="text" id="lugar_visita" required><br><br>
+  <label>Fecha: <input type="date" id="fechaVisita"></label><br>
+  <label>Hora: <input type="time" id="horaVisita"></label><br>
+  <label>Dirección: <input type="text" id="direccionVisita"></label> <br><br>
+  
+  <button type="submit">Agendar Visita</button>
+</div>
 
-      <button type="submit">Agendar Visita</button>
-    </form>
-  </div>
-  <p id="mensaje"></p>
+<!-- Enlace al archivo JS -->
+<script src="js/ServiciosACotizar.js"></script>
 
-  <script src="js/ServiciosACotizar.js"></script>
 </body>
 </html>
-

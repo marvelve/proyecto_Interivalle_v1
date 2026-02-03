@@ -1,96 +1,97 @@
-
-
+// =================================================
 // PROTECCIÓN DE SESIÓN
+// Verifica si hay un usuario logueado por correo
+// =================================================
+window.onload = function () {
+    const correo = localStorage.getItem("usuarioCorreo");
 
-window.onload = function(){
-   const correo = localStorage.getItem("usuarioCorreo");
-   if(!correo){
-      window.location.replace("/login.html");
-   }
-}
-
-
-// Detectar la opción seleccionada
-const opcionRadios = document.querySelectorAll('input[name="opcion"]');
-const divCotizacion = document.getElementById("cotizacionBase");
-const divVisita = document.getElementById("visitaTecnica");
-const mensaje = document.getElementById("mensaje");
-
-// Cuando el usuario selecciona una opción
-opcionRadios.forEach(radio => {
-  radio.addEventListener("change", () => {
-    if (radio.value === "base") {
-      divCotizacion.style.display = "block";
-      divVisita.style.display = "none";
-    } else if (radio.value === "visita") {
-      divVisita.style.display = "block";
-      divCotizacion.style.display = "none";
+    if (!correo) {
+        alert("Debe iniciar sesión primero");
+        window.location.replace("login.html");
     }
-    mensaje.textContent = ""; // limpiar mensaje anterior
+};
+
+
+document.addEventListener("DOMContentLoaded", function () {
+
+console.log("JS ServiciosACotizar cargado");
+  const opcionCotizacion = document.getElementById("opcionCotizacion");
+  const opcionVisita = document.getElementById("opcionVisita");
+
+  const bloqueCotizacion = document.getElementById("bloqueCotizacion");
+  const bloqueVisita = document.getElementById("bloqueVisita");
+
+  opcionCotizacion.addEventListener("change", function () {
+    if (this.checked) {
+      bloqueCotizacion.style.display = "block";
+      bloqueVisita.style.display = "none";
+    }
   });
-});
 
-// Enviar Cotización Base 
-// Al enviar checklist
-document.getElementById("formChecklist").addEventListener("submit", e => {
-  e.preventDefault();
+  opcionVisita.addEventListener("change", function () {
+    if (this.checked) {
+      bloqueVisita.style.display = "block";
+      bloqueCotizacion.style.display = "none";
+    }
+  });
+  
+  const btnCotizar = document.getElementById("btnCotizar");
 
-  const items = Array.from(document.querySelectorAll('input[name="item"]:checked'))
-                   .map(i => ({ idServicio: parseInt(i.value) }));
+btnCotizar.addEventListener("click", () => {
 
-  if(items.length == 0){
-    mensaje.textContent = "Selecciona al menos un ítem";
-    mensaje.style.color="red";
+  const checks = document.querySelectorAll(".servicioCheck");
+  const serviciosSeleccionados = [];
+
+  checks.forEach(check => {
+    if (check.checked) {
+      serviciosSeleccionados.push(Number(check.value));
+    }
+  });
+
+  if (serviciosSeleccionados.length === 0) {
+    alert("Debe seleccionar al menos un servicio");
     return;
   }
+    const nombreProyecto = document.getElementById("nombre_proyecto_usuario").value.trim();
 
-  const correo = localStorage.getItem("usuarioCorreo");
+     if (nombreProyecto === "") {
+       alert("Debe ingresar el nombre del proyecto");
+       return;
+     }
+    const correo = localStorage.getItem("usuarioCorreo");
 
+  // JSON a enviar al backend
   const data = {
-     fechaSolicitud: new Date().toISOString().split("T")[0],
-     usuario: { correoUsuario: correo },
-     detalles: items
+    correoUsuario: correo,
+    tipoSolicitud: "COTIZACION",
+    nombreProyectoUsuario: nombreProyecto,
+    servicios: serviciosSeleccionados
   };
 
-  fetch("http://localhost:8081/api/servicios/guardar",{
-    method:"POST",
-    headers:{ "Content-Type":"application/json"},
+  fetch("/serviciosACotizar/crear", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify(data)
   })
-  .then(res => res.json())
+  .then(response => {
+    if (!response.ok) {
+      return response.text().then(msg => { throw new Error(msg); }); //throw new Error("Error al guardar la solicitud");
+    }
+    return response.text();
+  })
   .then(() => {
-     window.location.href="ObraBlanca.html";
+    // Redirigir SOLO si guardó bien
+    window.location.href = "CotizacionBase.html";
+  })
+  .catch(error => {
+    console.error(error);
+    alert(error.message); //alert("No se pudo guardar la cotización");
   });
 });
 
-
-// Enviar solicitud de Visita Técnica
-document.getElementById("formVisita").addEventListener("submit", e => {
- e.preventDefault();
-
- const correo = localStorage.getItem("usuarioCorreo");
-
- const data = {
-   tipoSolicitud: "VISITA",
-   fechaVisita: document.getElementById("fecha_visita").value,
-   horaVisita: document.getElementById("hora_visita").value,
-   lugarVisita: document.getElementById("lugar_visita").value,
-   usuario: { correoUsuario: correo }
- };
-
- fetch("http://localhost:8081/api/servicios/guardar",{
-   method:"POST",
-   headers:{ "Content-Type":"application/json"},
-   body: JSON.stringify(data)
- })
- .then(res => res.json())
- .then(()=> {
-    mensaje.textContent="Visita técnica agendada correctamente";
-    mensaje.style.color="green";
- });
 });
-
-
 
 // CERRAR SESIÓN
 function cerrarSesion(){

@@ -18,39 +18,97 @@ public class ServiciosACotizar {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idSolicitud;
+    private Long idServiciosACotizar;
 
     @ManyToOne
-    @JoinColumn(name = "correo_usuario")
+    @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
+    
+    @Column(name = "nombre_proyecto_usuario", nullable = false)
+    private String nombreProyectoUsuario;
+    
+    private LocalDate fechaSolicitud;
 
-    @Column(name="tipo_solicitud")
-    private String tipoSolicitud;
+    private String tipoSolicitud; // COTIZACION | VISITA
 
-    @Column(name="fecha_visita")
-    private LocalDate fechaVisita;
+    private String estado; // GENERADO | PENDIENTE
 
-    @Column(name="hora_visita")
-    private String horaVisita;
+    // Relación: Una solicitud tiene muchos detalles
+    @OneToMany(mappedBy = "serviciosACotizar", cascade = CascadeType.ALL)
+    private List<ServiciosDetalle> serviciosDetalle;
 
-    @Column(name="lugar_visita")
-    private String lugarVisita;
+    @OneToOne(mappedBy = "serviciosACotizar", cascade = CascadeType.ALL)
+    private VisitaTecnica visitaTecnica;
 
-    @Column(name="fecha_solicitud")
-    private LocalDate fechaSolicitud = LocalDate.now();
+    // getters y setters
 
-    @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL)
-    private List<ServiciosDetalle> detalles;
+    public Long getIdServiciosACotizar() {
+        return idServiciosACotizar;
+    }
 
-    // ===== Getters y Setters correctos =====
+    public void setIdServiciosACotizar(Long idServiciosACotizar) {
+        this.idServiciosACotizar = idServiciosACotizar;
+    }
 
-    public Usuario getUsuario() { return usuario; }
-    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
+    public Usuario getUsuario() {
+        return usuario;
+    }
 
-    public LocalDate getFechaSolicitud() { return fechaSolicitud; }
-    public void setFechaSolicitud(LocalDate fechaSolicitud) { this.fechaSolicitud = fechaSolicitud; }
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+    
+    public String getNombreProyectoUsuario() {
+        return nombreProyectoUsuario;
+    }
 
-    public List<ServiciosDetalle> getDetalles() { return detalles; }
-    public void setDetalles(List<ServiciosDetalle> detalles) { this.detalles = detalles; }
+    public void setNombreProyectoUsuario(String nombreProyectoUsuario) {
+        this.nombreProyectoUsuario = nombreProyectoUsuario;
+    }
+
+    public LocalDate getFechaSolicitud() {
+        return fechaSolicitud;
+    }
+
+    public void setFechaSolicitud(LocalDate fechaSolicitud) {
+        this.fechaSolicitud = fechaSolicitud;
+    }
+
+    public String getTipoSolicitud() {
+        return tipoSolicitud;
+    }
+
+    public void setTipoSolicitud(String tipoSolicitud) {
+        this.tipoSolicitud = tipoSolicitud;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public List<ServiciosDetalle> getServiciosDetalle() {
+        return serviciosDetalle;
+    }
+
+    public void setServiciosDetalle(List<ServiciosDetalle> serviciosDetalle) {
+        this.serviciosDetalle = serviciosDetalle;
+    }
+
+    public VisitaTecnica getVisitaTecnica() {
+        return visitaTecnica;
+    }
+
+    public void setVisitaTecnica(VisitaTecnica visitaTecnica) {
+        this.visitaTecnica = visitaTecnica;
+    }
+    
+ 
 }
+
+    
+
 

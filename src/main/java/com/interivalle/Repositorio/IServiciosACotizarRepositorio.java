@@ -17,5 +17,7 @@ import java.util.List;
 public interface IServiciosACotizarRepositorio extends JpaRepository<ServiciosACotizar, Long> {
 
     List<ServiciosACotizar> findByUsuario_CorreoUsuario(String correo);
+   
 }
-    
+
+

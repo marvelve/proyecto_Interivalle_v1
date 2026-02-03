@@ -9,59 +9,32 @@ package com.interivalle.Controlador;
  * @author mary_
  */
 
-import com.interivalle.Modelo.ServiciosACotizar;
-import com.interivalle.Modelo.ServiciosDetalle;
-import com.interivalle.Modelo.Usuario;
+import com.interivalle.DTO.ServiciosACotizarDTO;
 import com.interivalle.Servicio.ServiciosACotizarServicio;
-import com.interivalle.Servicio.UsuarioServicio;
-import java.time.LocalDate;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/api/servicios")
-@CrossOrigin("*")
 
+@RestController
+//@RequestMapping("/api")
+@RequestMapping("/serviciosACotizar")
+@CrossOrigin("*")
 public class ServiciosACotizarControler {
 
     @Autowired
-    private ServiciosACotizarServicio servicio;
-    @Autowired
-    private UsuarioServicio usuarioServicio;
+    private ServiciosACotizarServicio serviciosACotizarServicio;
 
+    @PostMapping("/crear")
+    public ResponseEntity<?> crear(@RequestBody ServiciosACotizarDTO dto){
 
-    @PostMapping("/guardar")
-public ServiciosACotizar guardar(@RequestBody ServiciosACotizar solicitud) {
-
-    // Obtener el correo que llega desde el frontend
-    String correo = solicitud.getUsuario().getCorreoUsuario();
-
-    // Buscar usuario real en la base de datos
-    Optional<Usuario> u = usuarioServicio.buscarPorCorreo(correo);
-
-    Usuario usuario = u.orElseThrow(() ->
-        new RuntimeException("Usuario no encontrado")
-    );
-
-    // Asignar usuario real a la solicitud
-    solicitud.setUsuario(usuario);
-
-    // Fecha automática
-    solicitud.setFechaSolicitud(LocalDate.now());
-
-    // Relación inversa en detalles
-    if(solicitud.getDetalles() != null){
-        for(ServiciosDetalle d : solicitud.getDetalles()){
-            d.setServicio(solicitud);
-        }
+        try {
+        serviciosACotizarServicio.crearSolicitud(dto);
+        return ResponseEntity.ok("Solicitud creada correctamente");
+        }catch (RuntimeException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
-
-    // Guardar todo en cascada
-    return servicio.guardarSolicitud(solicitud);
+    }
 }
 
-
-  
-}
 
