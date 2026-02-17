@@ -49,7 +49,7 @@ public void crearSolicitud(ServiciosACotizarDTO dto) {
 
         if (existe > 0) {
             throw new RuntimeException(
-                "La cotización ya existe para el servicio seleccionado en este proyecto"
+                "La cotización ya existe para uno de los servicios seleccionado para este proyecto"
             );
         }
     }

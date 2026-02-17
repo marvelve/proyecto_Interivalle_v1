@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  * Capa de negocio encargada de la logica relacionada con usuarios.
@@ -35,24 +37,34 @@ public class UsuarioServicio {
        // Verificar si el correo ya existe
         Optional<Usuario> existente = usuarioRepositorio.findByCorreoUsuario(usuario.getCorreoUsuario());
         if (existente.isPresent()) {
-            throw new IllegalArgumentException("El correo ya esta registrado");
+            throw new ResponseStatusException(
+                     HttpStatus.CONFLICT,
+                 "El correo ya está registrado"
+    ); //IllegalArgumentException("El correo ya esta registrado");
         }
         return usuarioRepositorio.save(usuario);
+    }
+
+    public Usuario login(String correo, String contrasena) {
+
+        Usuario usuario = usuarioRepositorio.findByCorreoUsuario(correo)
+            .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.UNAUTHORIZED, "Correo no registrado"
+            ));
+
+        if (!usuario.getContrasenaUsuario().equals(contrasena)) {
+            throw new ResponseStatusException(
+                HttpStatus.UNAUTHORIZED, "Contraseña incorrecta"
+            );
+        }
+
+        return usuario;
     }
     
     // Buscar usuario por correo
     public Optional<Usuario> buscarPorCorreo(String correoUsuario) {
         return usuarioRepositorio.findByCorreoUsuario(correoUsuario);
     }
-    
-    public Usuario validarLogin(String correo, String contrasena) {
-    Optional<Usuario> usuario = usuarioRepositorio.findByCorreoUsuario(correo);
-
-    if (usuario.isPresent() && usuario.get().getContrasenaUsuario().equals(contrasena)) {
-        return usuario.get();
-    }
-    return null; // Si no existe o la contraseña no coincide
-}
 
      
 

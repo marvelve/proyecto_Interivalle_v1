@@ -32,7 +32,7 @@ public class Usuario {
     Integer idUsuario;
 
     @NotBlank(message = "El nombre es obligatorio")
-    @Size(min = 4, message = "El nombre debe tener mínimo 3 caracteres")
+    @Size(min = 5, message = "El nombre debe tener mínimo 6 caracteres")
     @Column(name = "nombre_usuario")
     String nombreUsuario;
 
@@ -47,12 +47,31 @@ public class Usuario {
 
     @Column(name = "celular_usuario")
     String celularUsuario;
+    
+    @Column(name = "ciudad_usuario")
+    String ciudadUsuario;
 
     @Column(name = "fecha_registro_usuario")
     LocalDateTime fechaRegistroUsuario;
    
     @Column(name = "id_rol")
     Integer idRol = 3;
+
+    public Integer getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public Integer getIdRol() {
+        return idRol;
+    }
+
+    public void setIdRol(Integer idRol) {
+        this.idRol = idRol;
+    }
     
     @PrePersist
     protected void onCreate() {
@@ -97,6 +116,10 @@ public class Usuario {
     public String getCelularUsuario() { return celularUsuario; }
     public void setCelularUsuario(String celularUsuario) { 
         this.celularUsuario = celularUsuario; }
+    
+    public String getCiudadUsuario() { return ciudadUsuario; }
+    public void setCiudadUsuario(String ciudadUsuario) { 
+        this.ciudadUsuario = ciudadUsuario; }
 
     public LocalDateTime getFechaRegistroUsuario() { return fechaRegistroUsuario; }
     public void setFechaRegistroUsuario(LocalDateTime fechaRegistroUsuario) { 

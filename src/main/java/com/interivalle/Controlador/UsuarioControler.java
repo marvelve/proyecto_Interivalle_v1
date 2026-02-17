@@ -12,15 +12,17 @@ package com.interivalle.Controlador;
  */
 import com.interivalle.Modelo.Usuario;
 import com.interivalle.Servicio.UsuarioServicio;
+import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/api/usuarios") // URL base para acceder al controlador
+@RequestMapping("/api")
+//@RequestMapping("/api/usuarios") // URL base para acceder al controlador
 
 public class UsuarioControler {
 
@@ -46,7 +48,7 @@ public class UsuarioControler {
 @PostMapping("/login")
 public ResponseEntity<?> loginUsuario(@RequestBody Usuario usuario) {
 
-    Usuario usuarioEncontrado = usuarioServicio.validarLogin(
+    Usuario usuarioEncontrado = usuarioServicio.login(
             usuario.getCorreoUsuario(), usuario.getContrasenaUsuario()
     );
 
@@ -77,5 +79,13 @@ public ResponseEntity<?> loginUsuario(@RequestBody Usuario usuario) {
         usuarioServicio.eliminarUsuario(correoUsuario);
         return "Usuario eliminado correctamente";
     }
+    
+    @PostMapping("/registrar")
+    public Usuario registrar(@RequestBody Usuario usuario) {
+    usuario.setFechaRegistroUsuario(LocalDateTime.now());
+    usuario.setIdRol(3);
+    return usuarioServicio.guardarUsuario(usuario);
+    }
 }
+
 
